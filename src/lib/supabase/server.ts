@@ -1,7 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 
-const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
 const DEMO_USER = { id: 'demo-user', email: 'demo@linkforge.app' };
 const DEMO_PROFILE = {
   id: 'demo-user',
@@ -19,15 +18,20 @@ const DEMO_LINKS = [
   { id: '3', profile_id: 'demo-user', title: 'Portfolio', url: 'https://example.com', icon: '✨', position: 2, click_count: 7, created_at: '', updated_at: '' },
 ];
 
+function isConfigured() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  return url && !url.includes('placeholder') && url.startsWith('https://');
+}
+
 export async function createClient() {
-  if (DEMO_MODE) {
+  if (!isConfigured()) {
     return createDemoServerClient();
   }
 
   const cookieStore = await cookies();
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key',
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {
