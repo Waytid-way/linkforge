@@ -51,7 +51,7 @@ export default async function DashboardPage() {
         </div>
         <div className="p-6 rounded-2xl bg-surface border border-border">
           <div className="text-3xl font-bold text-green-500">
-            {links?.reduce((sum, l) => sum + (l.click_count || 0), 0) || 0}
+            {links?.reduce((sum: number, l: { click_count?: number }) => sum + (l.click_count || 0), 0) || 0}
           </div>
           <div className="text-text-muted mt-1">Total Clicks</div>
         </div>
