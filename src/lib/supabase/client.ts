@@ -52,13 +52,13 @@ function createDemoClient() {
             if (table === 'profiles') return { data: DEMO_PROFILE, error: null };
             if (table === 'links') return { data: DEMO_LINKS, error: null };
             return { data: null, error: null };
-          }),
-          order: () => ({
-            limit: async () => {
-              if (table === 'links') return { data: DEMO_LINKS, error: null };
-              return { data: null, error: null };
-            }),
-          }),
+          },
+        }),
+        order: () => ({
+          limit: async () => {
+            if (table === 'links') return { data: DEMO_LINKS, error: null };
+            return { data: null, error: null };
+          },
         }),
       }),
       insert: async () => ({ data: DEMO_LINKS[0], error: null }),
