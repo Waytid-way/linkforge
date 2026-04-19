@@ -86,7 +86,7 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div className="space-y-3">
-            {links.slice(0, 5).map((link) => (
+            {links.slice(0, 5).map((link: { id: string; url: string; title: string; click_count?: number }) => (
               <a
                 key={link.id}
                 href={link.url}
